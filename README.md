@@ -25,12 +25,37 @@ go mod download
 
 ## Configuration
 
-For S3 upload functionality, set the following environment variables:
+### Environment Variables
 
-```bash
-export AWS_REGION=your-region
-export AWS_BUCKET_NAME=your-bucket-name
-```
+The application uses environment variables for AWS configuration. You can set these in two ways:
+
+1. **Using a `.env` file** (recommended for development):
+   ```bash
+   cp .env.example .env
+   ```
+   Then edit `.env` with your actual values:
+   ```
+   AWS_REGION=us-east-1
+   AWS_BUCKET_NAME=your-actual-bucket-name
+   ```
+
+2. **Using system environment variables**:
+   ```bash
+   export AWS_REGION=us-east-1
+   export AWS_BUCKET_NAME=your-actual-bucket-name
+   export AWS_ACCESS_KEY_ID=your-access-key
+   export AWS_SECRET_ACCESS_KEY=your-secret-key
+   ```
+
+### AWS Credentials
+
+AWS credentials can be configured in multiple ways (in order of precedence):
+
+1. Environment variables: `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+2. AWS credentials file: `~/.aws/credentials`
+3. IAM role (when running on AWS infrastructure)
+
+For more information, see the [AWS SDK for Go configuration guide](https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/).
 
 ## Usage
 

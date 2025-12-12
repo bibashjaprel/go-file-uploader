@@ -6,6 +6,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -19,9 +20,24 @@ import (
 
 const (
     MaxUploadSize = 10 << 20 // 10 MiB
-    S3Bucket      = "your-s3-bucket-name" // your S3 bucket name
-    S3Region      = "your-region"         // your AWS region, e.g., "us-west-2"
 )
+
+var (
+	S3Bucket string
+	S3Region string
+)
+
+func init() {
+	S3Bucket = os.Getenv("AWS_BUCKET_NAME")
+	S3Region = os.Getenv("AWS_REGION")
+	
+	if S3Bucket == "" {
+		S3Bucket = "your-s3-bucket-name"
+	}
+	if S3Region == "" {
+		S3Region = "us-east-1"
+	}
+}
 
 var allowedMIMEs = map[string]struct{}{
     "image/jpeg":      {},
